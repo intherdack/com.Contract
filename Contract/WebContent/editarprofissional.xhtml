@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<link rel="shortcut icon" type="image/x-png" href="#{request.contextPath}/img/fav1.png"/>
+	<link rel="StyleSheet" type="text/css" href="css/css.css"
+		media="screen"></link>
+	<title>Editar Profissional</title>
+</h:head>
+<h:body onload="#{editaProfissional.BuscarDados()}, #{profissionalView.Pesquisa()}">
+
+
+	<nav class="inicio">
+
+	<div id="imgmenu">
+		<h:graphicImage
+			value="/img/logo final fundo branco pequeno redondo.png">
+		</h:graphicImage>
+		
+
+	</div>
+
+	</nav>
+		<h:form>  
+    <p:growl id="messages"/>
+ 
+    <p:menubar styleClass="menu"  style="border: none !important">
+    
+    	 <p:submenu label="Profissional" icon="ui-icon-person">
+          
+               <p:menuitem value="Minha Pagina" url="paginaprofissional.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+               <p:separator></p:separator>
+            <p:menuitem value="Avaliacoes Recebidas" url="avaliacoesprofissional.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+            <p:separator></p:separator>
+             <p:menuitem value="Contract Messages" url="profissionalSelecionaChat.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+               
+        </p:submenu>
+      <p:submenu label="Empregador" icon="ui-icon-search">
+      <p:menuitem value="Avaliar Empregador" url="avaliarempregador.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+             <p:separator></p:separator>
+            <p:menuitem value="Todas as Vagas" url="todasofertas.xhtml" icon="ui-icon-arrowreturnthick-1-w" />
+             <p:separator></p:separator>
+            <p:menuitem value="Vagas Inscritas" url="status.xhtml" icon="ui-icon-arrowreturnthick-1-w" />
+        </p:submenu>
+ 
+        <p:submenu label="Meu Perfil" icon="ui-icon-gear">
+         <p:menuitem value="Editar Perfil" url="editarprofissional.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+               <p:separator></p:separator>
+          <p:menuitem value="Alterar Foto" url="paginaprofissionalupload.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+               <p:separator></p:separator>
+         
+            
+        </p:submenu>
+ 
+        <f:facet name="options">
+            
+            <p:commandButton value="Logout" id="ajax" action="index.xhtml" actionListener="#{sessao.encerraSessao()}" />
+        </f:facet>
+    </p:menubar>
+</h:form>
+
+		<p:layout style="min-width:400px;min-height:700px;">
+	
+			<p:layoutUnit position="west" resizable="false" size="320"
+				minSize="40" maxSize="320">
+	
+				<f:facet name="header">
+					<p:graphicImage value="#{profissionalView.imagem}" width="290"
+						height="290" id="imgprofile" stream="false" ></p:graphicImage>
+				</f:facet>
+
+
+				<h:form id="formlateral">
+
+
+					<p:panelGrid columns="1" style="min-width:310px">
+						
+						<h:outputText value="#{profissionalView.apelido}" style="color: #12bbad;" />
+						<h:outputText value="#{profissionalView.nota}" />
+						<h:outputText value="#{profissionalView.avaliacao}" />
+						<h:outputText value="#{profissionalView.estado}" />
+						<h:outputText value="#{profissionalView.cidade}" />
+						<h:outputText value="Bem vindo a página de alteração de dados cadastrais, realize as alterações necessárias e 
+						clique em salvar.
+						" style="color:olive;"/>
+						
+	
+					</p:panelGrid>
+				
+					
+				</h:form>	
+			</p:layoutUnit>
+			
+			
+		<h:form>
+			<p:layoutUnit position="center">
+		
+
+	<h:form id="frmprof">
+		<p:growl id="cadastroprof" showDetail="true" />
+
+		<p:fieldset legend="Editar Cadastro Profissional" style="margin-bottom:20px">
+			<h:panelGrid columns="2" cellpadding="5">
+			
+				<p:outputLabel value="Nome:" />
+				<p:inputText id="nome" value="#{editaProfissional.listaPro.get(o).nome}" required="true" requiredMessage="Nome é obrigatório" />
+				<p:outputLabel value="CPF:" />
+				<p:inputText id="cpf" value="#{editaProfissional.listaPro.get(o).cpf}" required="true" requiredMessage="Digite um CPF/CNPJ"/>
+				<p:outputLabel value="Telefone Fixo:" />
+				<p:inputMask id="telFixo" value="#{editaProfissional.listaPro.get(o).telFixo}"
+					maxlength="10" mask="(99) 9999-9999" required="true"
+					requiredMessage="Digite um Telefone Fixo" />
+				<p:outputLabel value="Telefone Movel:" />
+				<p:inputMask id="telMovel" value="#{editaProfissional.listaPro.get(o).telMovel}"
+					maxlength="10" mask="(99) 99999-9999" required="true"
+					requiredMessage="Digite um Telefone Movel" />
+					
+					<p:outputLabel value="CEP: " />    
+        		<p:inputMask id="cep" value="#{editaProfissional.cep}" maxlength="8" mask="99999-999">
+       			 <p:ajax event="blur" listener="#{editaProfissional.bntCep()}" update="cepatualiza" />
+       		 </p:inputMask>
+					<p:fieldset id="cepatualiza">
+				
+        <p:outputLabel value="Cidade: " /> 
+    
+         <br></br>
+        <p:inputText id="cidade" value="#{editaProfissional.cidade}" disabled="true" /> 
+          <br></br>
+        <p:outputLabel value="UF: " />
+     <br></br>
+        <p:inputText id="uf" value="#{editaProfissional.estado}" disabled="true" />
+        
+       </p:fieldset>
+					
+				<br></br>	
+				<p:outputLabel value="Apelido para sua conta:" />
+				<p:inputText id="usuario" value="#{editaProfissional.listaPro.get(o).apelido}"
+					required="true" requiredMessage="Digite um Apelido" />
+				<p:outputLabel value="E-mail:" />
+				<p:inputText id="email" value="#{editaProfissional.listaPro.get(o).email}"
+					required="true" requiredMessage="Digite um E-mail" disabled="true"/>
+				
+
+
+				<p:outputLabel value="Escreva suas referências:" />
+				<p:inputTextarea rows="5" cols="40" counter="display999" maxlength="254" counterTemplate="{0} caracteres restantes" autoResize="false" required="true" requiredMessage="Referência é um campo obrigatório" value="#{editaProfissional.listaPro.get(o).descricao}"/>
+   				<br></br>
+   				 <h:outputText id="display999" />		
+
+			</h:panelGrid>
+
+			<p:separator style="width 100%" />
+		
+		
+		
+			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+				<h3>Escolha o tipo de trabalho que está procurando:</h3>
+
+				<p:spacer>
+
+					<p:selectOneButton value="#{editaProfissional.listaPro.get(o).tipo}" required="true"
+						requiredMessage="Selecione o Tipo de Trabalho">
+						<f:selectItem itemLabel="Fixo" itemValue="Fixo" />
+						<f:selectItem itemLabel="Freelance" itemValue="Freelance" />
+					</p:selectOneButton>
+					<p:spacer />
+
+					<h:outputText id="display" value="#{selectOneView.option}"
+						style="font-weight: bold" />
+
+					<p:spacer />
+				</p:spacer>
+				
+			</h:panelGrid>
+			<p:separator style="width 100%"/>
+			<h3>Escolha os dias e horarios que pode trabalhar:</h3>
+
+			<h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="4">
+
+				<p:fieldset legend="Segunda-Feira">
+					<p:selectOneButton value="#{editaProfissional.listaPro.get(o).segunda}" required="false"
+						requiredMessage="Selecione uma disponibilidade na Segunda-Feira">
+						<f:selectItem itemLabel="Disponivel" itemValue="Disponivel" />
+					</p:selectOneButton>
+					<h:outputText id="display1" value="#{selectOneView.option}"
+						style="font-weight: bold" />
+					<p />
+					<label> Hora Inicial: </label>
+					<br />
+					<p:calendar value="#{editaProfissional.listaPro.get(o).hora_inicial_segunda}"
+						pattern="HH:mm" timeOnly="true" mask="true" class="inputCalendar" showButtonPanel="true" navigator="true" locale="pt_BR"/>
+					<br />
+					<label> Hora Final: </label>
+					<br />
+					<p:calendar value="#{editaProfissional.listaPro.get(o).hora_final_segunda}"
+						pattern="HH:mm" timeOnly="true" mask="true" showButtonPanel="true" navigator="true" locale="pt_BR"/>
+				</p:fieldset>
+
+				<p:fieldset legend="Terça-Feira">
+					<p:selectOneButton value="#{editaProfissional.listaPro.get(o).terca}" required="false"
+						requiredMessage="Selecione uma disponibilidade na Terça-Feira">
+						<f:selectItem itemLabel="Disponivel" itemValue="Disponivel" />
+					</p:selectOneButton>
+					<h:outputText id="display2" value="#{selectOneView.option1}"
+						style="font-weight: bold" />
+					<p />
+					<label> Hora Inicial: </label>
+					<br />
+					<p:calendar value="#{editaProfissional.listaPro.get(o).hora_inicial_terca}"
+						pattern="HH:mm" timeOnly="true" mask="true" showButtonPanel="true" navigator="true" locale="pt_BR"/>
+					<br />
+					<label> Hora Final: </label>
+					<br />
+					<p:calendar value="#{editaProfissional.listaPro.get(o).hora_final_terca}"
+						pattern="HH:mm" timeOnly="true" mask="true" class="inputCalendar" showButtonPanel="true" navigator="true" locale="pt_BR" />
+				</p:fieldset>
+
+				<p:fieldset legend="Quarta-Feira">
+					<p:selectOneButton value="#{editaProfissional.listaPro.get(o).quarta}" required="false"
+						requiredMessage="Selecione uma disponibilidade na Quarta-Feira">
+						<f:selectItem itemLabel="Disponivel" itemValue="Disponivel" />
+					</p:selectOneButton>
+					<h:outputText id="display3" value="#{selectOneView.option2}"
+						style="font-weight: bold" />
+					<p />
+					<label> Hora Inicial: </label>
+					<br />
+					<p:calendar value="#{editaProfissional.listaPro.get(o).hora_inicial_quarta}"
+						pattern="HH:mm" timeOnly="true" mask="true" showButtonPanel="true" navigator="true" locale="pt_BR"/>
+					<br />
+					<label> Hora Final: </label>
+					<br />
+					<p:calendar value="#{editaProfissional.listaPro.get(o).hora_final_quarta}"
+						pattern="HH:mm" timeOnly="true" mask="true" showButtonPanel="true" navigator="true" locale="pt_BR"/>
+				</p:fieldset>
+
+				<p:fieldset legend="Quinta-Feira">
+					<p:selectOneButton value="#{editaProfissional.listaPro.get(o).quinta}" required="false"
+						requiredMessage="Selecione uma disponibilidade na Quinta-Feira">
+						<f:selectItem itemLabel="Disponivel" itemValue="Disponivel" />
+					</p:selectOneButton>
+					<h:outputText id="display6" value="#{selectOneView.option3}"
+						style="font-weight: bold" />
+					<p />
+					<label> Hora Inicial: </label>
+					<br />
+					<p:calendar value="#{editaProfissional.listaPro.get(o).hora_inicial_quinta}"
+						pattern="HH:mm" timeOnly="true" mask="true" showButtonPanel="true" navigator="true" locale="pt_BR"/>
+					<br />
+					<label> Hora Final: </label>
+					<br />
+					<p:calendar value="#{editaProfissional.listaPro.get(o).hora_final_quinta}"
+						pattern="HH:mm" timeOnly="true" mask="true" showButtonPanel="true" navigator="true" locale="pt_BR"/>
+				</p:fieldset>
+
+				<p:fieldset legend="Sexta-Feira">
+					<p:selectOneButton value="#{editaProfissional.listaPro.get(o).sexta}" required="false"
+						requiredMessage="Selecione uma disponibilidade na Sexta-Feira">
+						<f:selectItem itemLabel="Disponivel" itemValue="Disponivel" />
+					</p:selectOneButton>
+					<h:outputText id="display5" value="#{selectOneView.option4}"
+						style="font-weight: bold" />
+					<p />
+					<label> Hora Inicial: </label>
+					<br />
+					<p:calendar value="#{editaProfissional.listaPro.get(o).hora_inicial_sexta}"
+						pattern="HH:mm" timeOnly="true" mask="true" showButtonPanel="true" navigator="true" locale="pt_BR"/>
+					<br />
+					<label> Hora Final: </label>
+					<br />
+					<p:calendar value="#{editaProfissional.listaPro.get(o).hora_final_sexta}"
+						pattern="HH:mm" timeOnly="true" mask="true" showButtonPanel="true" navigator="true" locale="pt_BR"/>
+				</p:fieldset>
+
+				<p:fieldset legend="Sábado">
+					<p:selectOneButton value="#{editaProfissional.listaPro.get(o).sabado}" required="false"
+						requiredMessage="Selecione uma disponibilidade na Sábado">
+						<f:selectItem itemLabel="Disponivel" itemValue="Disponivel" />
+					</p:selectOneButton>
+					<h:outputText id="display8" value="#{selectOneView.option5}"
+						style="font-weight: bold" />
+					<p />
+					<label> Hora Inicial: </label>
+					<br />
+					<p:calendar value="#{editaProfissional.listaPro.get(o).hora_inicial_sabado}"
+						pattern="HH:mm" timeOnly="true" mask="true" showButtonPanel="true" navigator="true" locale="pt_BR"/>
+					<br />
+					<label> Hora Final: </label>
+					<br />
+					<p:calendar value="#{editaProfissional.listaPro.get(o).hora_final_sabado}"
+						pattern="HH:mm" timeOnly="true" mask="true" showButtonPanel="true" navigator="true" locale="pt_BR"/>
+				</p:fieldset>
+
+
+				<p:fieldset legend="Domingo">
+					<p:selectOneButton value="#{editaProfissional.listaPro.get(o).domingo}" required="false"
+						requiredMessage="Selecione uma disponibilidade na Domingo">
+						<f:selectItem itemLabel="Disponivel" itemValue="Disponivel" />
+					</p:selectOneButton>
+					<h:outputText id="display10" value="#{selectOneView.option6}"
+						style="font-weight: bold" />
+					<p />
+					<label> Hora Inicial: </label>
+					<br />
+					<p:calendar value="#{editaProfissional.listaPro.get(o).hora_inicial_domingo}"
+						pattern="HH:mm" timeOnly="true" mask="true" showButtonPanel="true" navigator="true" locale="pt_BR"/>
+					<br />
+					<label> Hora Final: </label>
+					<br />
+					<p:calendar value="#{editaProfissional.listaPro.get(o).hora_final_domingo}"
+						pattern="HH:mm" timeOnly="true" mask="true" showButtonPanel="true" navigator="true" locale="pt_BR"/>
+				</p:fieldset>
+	
+	
+
+	
+			</h:panelGrid>
+			
+			
+	
+			
+		<p:fieldset legend="Selecione a area de atuação: " >
+		
+	
+			
+			
+					<br />
+					<p:fieldset styleClass="fielcadastro">
+					<p:outputLabel value="Para Casa" />
+					<br />
+					<p:selectOneButton value="#{editaProfissional.listaPro.get(0).marido}" required="false"  >
+						<f:selectItem itemLabel="Marido de Aluguel" itemValue="marido"  />
+					</p:selectOneButton>
+					<br />
+					<p:selectOneButton value="#{editaProfissional.listaPro.get(0).faxineiro}"
+						required="false" styleClass="tmbutton" >
+						<f:selectItem itemLabel="Faxineiro(a)" itemValue="faxineiro" />
+					</p:selectOneButton>
+					<br />
+					<p:selectOneButton value="#{editaProfissional.listaPro.get(0).limpeza}" required="false" styleClass="tmbutton" >
+						<f:selectItem itemLabel="Limpeza" itemValue="limpeza" />
+					</p:selectOneButton>
+					</p:fieldset>
+					
+					<p:fieldset styleClass="fielcadastro">
+					
+					<p:outputLabel value="Eventos" />
+					<br />
+					
+					<p:selectOneButton value="#{editaProfissional.listaPro.get(0).garcom}" required="false" styleClass="tmbutton" >
+						<f:selectItem itemLabel="Garcom" itemValue="garcom" />
+					</p:selectOneButton>
+					<br />
+					<p:selectOneButton value="#{editaProfissional.listaPro.get(0).bartender}"
+						required="false" styleClass="tmbutton">
+						<f:selectItem itemLabel="Bartender" itemValue="bartender" />
+					</p:selectOneButton>
+					<br />
+					<p:selectOneButton value="#{editaProfissional.listaPro.get(0).cozinheiro}"
+						required="false">
+						<f:selectItem itemLabel="Cozinheiro(a)" itemValue="cozinheiro" styleClass="tmbutton" />
+					</p:selectOneButton>
+					<br />
+					<p:selectOneButton value="#{editaProfissional.listaPro.get(0).churrasqueiro}"
+						required="false">
+						<f:selectItem itemLabel="Churrasqueiro" itemValue="churrasqueiro" />
+					</p:selectOneButton>
+					<br />
+					<p:selectOneButton value="#{editaProfissional.listaPro.get(0).confeteiro}"
+						required="false">
+						<f:selectItem itemLabel="Confeteiro(a)" itemValue="confeteiro" styleClass="tmbutton" />
+					</p:selectOneButton>
+					<br />
+					<p:selectOneButton value="#{editaProfissional.listaPro.get(0).fotografias}"
+						required="false">
+						<f:selectItem itemLabel="Fotografias" itemValue="fotografias" styleClass="tmbutton" />
+					</p:selectOneButton>
+					</p:fieldset>
+					
+					<p:fieldset styleClass="fielcadastro">
+					
+					<p:outputLabel value="Beleza Feminina" />
+					<br/>
+					<p:selectOneButton value="#{editaProfissional.listaPro.get(0).manicure}"
+						required="false">
+						<f:selectItem itemLabel="Manicure" itemValue="manicure" styleClass="tmbutton" />
+					</p:selectOneButton>
+					<br/>
+					<p:selectOneButton value="#{editaProfissional.listaPro.get(0).maquiagem}"
+						required="false">
+						<f:selectItem itemLabel="Maquiagem" itemValue="maquiagem" styleClass="tmbutton" />
+					</p:selectOneButton>
+					</p:fieldset>
+					
+					<p:fieldset styleClass="fielcadastro">
+					
+					<p:outputLabel value="Outros"/>
+					<br/>
+					<p:selectOneButton value="#{editaProfissional.listaPro.get(0).baba}" required="false" styleClass="tmbutton" >
+						<f:selectItem itemLabel="Babá" itemValue="baba" />
+					</p:selectOneButton>
+					<br/>
+					<p:selectOneButton value="#{editaProfissional.listaPro.get(0).marketing}"
+						required="false">
+						<f:selectItem itemLabel="Maketing de Midias Sociais"
+							itemValue="marketing" styleClass="tmbutton" />
+					</p:selectOneButton>
+					<br/>
+					<p:selectOneButton value="#{editaProfissional.listaPro.get(0).contabeis}"
+						required="false" tyleClass="tmbutton" >
+						<f:selectItem itemLabel="Serviços Contábeis" itemValue="contabeis" />
+					</p:selectOneButton>
+					<br/>
+					<p:selectOneButton value="#{editaProfissional.listaPro.get(0).motorista}"
+						required="false">
+						<f:selectItem itemLabel="Motorista de carro" itemValue="motorista" styleClass="tmbutton"  />
+					</p:selectOneButton>
+					</p:fieldset>
+			</p:fieldset>
+		<p:separator style="width 100%"/>
+
+			<p:commandButton value="Salvar Alterações" id="nonAjax"
+				actionListener="#{editaProfissional.bntAlterarPro()}" ajax="false" styleClass="botao" />
+
+
+		</p:fieldset>
+
+
+	</h:form>
+	</p:layoutUnit>
+	</h:form>
+	</p:layout>
+	
+	
+	<pingendo  style="cursor:pointer;position: fixed;bottom: 10px;right:10px;padding:4px;background-color: #00b0eb;border-radius: 8px; width:250px;display:flex;flex-direction:row;align-items:center;justify-content:center;font-size:14px;color:white; font-family:Arial">
+       <strong><a class="text-center text-white" href="https://www.facebook.com/john.proencio" target="_blank" style="color:white;">Proencio |</a></strong> 
+       <strong><a class="text-center text-white" href="https://www.facebook.com/paulino.lukas" target="_blank" style="color:white;">| Paulino</a></strong> 
+      </pingendo>
+      
+           <script type="text/javascript">
+           PrimeFaces.locales['pt_BR'] = {
+                closeText: 'Fechar',
+                prevText: 'Anterior',
+                nextText: 'Próximo',
+                currentText: 'Atual',
+                monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+                dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
+                weekHeader: 'Semana',
+                firstDay: 0,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Só Horas',
+                timeText: 'Tempo',
+                hourText: 'Hora',
+                minuteText: 'Minuto',
+                secondText: 'Segundo',
+                ampm: false,
+                month: 'Mês',
+                week: 'Semana',
+                day: 'Dia',
+                allDayText: 'Todo o Dia'
+            };
+     </script>  
+
+</h:body>
+
+</html>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:mg="http://at.irian/mygourmet"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>PrimeFaces Push Chat</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+  <link rel="shortcut icon" type="image/x-png" href="#{request.contextPath}/img/fav1.png"/>
+
+
+	<link rel="StyleSheet" type="text/css" href="css/css.css"
+		media="screen"></link>
+</h:head>
+<h:body onload="#{profissionalView.Pesquisa()}">
+
+
+	<nav class="inicio">
+
+		<div id="imgmenu">
+			<h:graphicImage value="/img/logo final fundo branco pequeno redondo.png">
+	
+			</h:graphicImage>
+
+			
+
+		</div>
+
+	</nav>
+			<h:form>  
+    <p:growl id="messages"/>
+ 
+    <p:menubar styleClass="menu"  style="border: none !important">
+    
+    	 <p:submenu label="Profissional" icon="ui-icon-person">
+          
+               <p:menuitem value="Minha Pagina" url="paginaprofissional.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+               <p:separator></p:separator>
+            <p:menuitem value="Avaliacoes Recebidas" url="avaliacoesprofissional.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+            <p:separator></p:separator>
+             <p:menuitem value="Contract Messages" url="profissionalSelecionaChat.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+               
+        </p:submenu>
+      <p:submenu label="Empregador" icon="ui-icon-search">
+      <p:menuitem value="Avaliar Empregador" url="avaliarempregador.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+             <p:separator></p:separator>
+            <p:menuitem value="Todas as Vagas" url="todasofertas.xhtml" icon="ui-icon-arrowreturnthick-1-w" />
+             <p:separator></p:separator>
+            <p:menuitem value="Vagas Inscritas" url="status.xhtml" icon="ui-icon-arrowreturnthick-1-w" />
+        </p:submenu>
+ 
+        <p:submenu label="Meu Perfil" icon="ui-icon-gear">
+         <p:menuitem value="Editar Perfil" url="editarprofissional.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+               <p:separator></p:separator>
+          <p:menuitem value="Alterar Foto" url="paginaprofissionalupload.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+               <p:separator></p:separator>
+         
+            
+        </p:submenu>
+ 
+        <f:facet name="options">
+            
+            <p:commandButton value="Logout" id="ajax" action="index.xhtml" actionListener="#{sessao.encerraSessao()}" />
+        </f:facet>
+    </p:menubar>
+</h:form>
+	
+		<p:layout style="min-width:400px;min-height:700px;">
+	
+			<p:layoutUnit position="west" resizable="false" size="320"
+				minSize="40" maxSize="320">
+	
+				<f:facet name="header">
+					<p:graphicImage value="#{profissionalView.imagem}" width="290"
+						height="290" id="imgprofile" stream="false" ></p:graphicImage>
+				</f:facet>
+
+
+				<h:form id="formlateral">
+
+
+					<p:panelGrid columns="1" style="min-width:310px">
+						
+						<h:outputText value="#{profissionalView.apelido}" style="color: #12bbad;" />
+						<h:outputText value="#{profissionalView.nota}" />
+						<h:outputText value="#{profissionalView.avaliacao}" />
+						<h:outputText value="#{profissionalView.estado}" />
+						<h:outputText value="#{profissionalView.cidade}" />
+						<h:outputText value="Bem vindo ao Chat, aqui você pode esclarecer dúvidas sobre a vaga com
+						 empregador, etc...
+						
+						" style="color:olive;"/>
+						
+	
+					</p:panelGrid>
+				
+					
+				</h:form>	
+			</p:layoutUnit>
+			
+			
+		<h:form>
+			<p:layoutUnit position="center" >
+    
+    <h:form id="form">
+    
+    <p:dataList value="#{chatprofissional.msgPro}" var="m" style="height:600px;overflow-y:scroll;display: flex;flex-direction: column-reverse;" id="listadata" >
+        <f:facet name="Contract Mensages">
+            Contract Mensages
+        </f:facet>
+        #{m.enviado}<br /> #{m.mensagem} às #{m.time}
+    </p:dataList>
+    
+
+
+    <p:poll interval="15" listener="#{chatprofissional.buscachatProfissional(chatprofissional.msgPro.get(0).idOriginadorEmpregador)}" />
+    <p:outputLabel value="Digite sua Menssagem"/>
+    	<p:inputText size="50" value="#{chatprofissional.mensagemTela}"></p:inputText>
+        <p:commandButton value="Enviar" actionListener="#{chatprofissional.SalvaMSGProfissional(chatprofissional.msgPro.get(0).idOriginadorEmpregador)}" styleClass="ui-priority-primary" update="listadata" />
+  
+    	
+
+    </h:form>
+ 
+    
+   
+     </p:layoutUnit>
+    </h:form>
+    </p:layout>
+    
+</h:body>
+</html>

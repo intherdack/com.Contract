@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<link rel="shortcut icon" type="image/x-png" href="#{request.contextPath}/img/fav1.png"/>
+	
+	<link rel="StyleSheet" type="text/css" href="css/css.css"
+		media="screen"></link>
+	<title>Avaliar Empregador</title>
+	
+</h:head>
+
+<h:body onload="#{avaliacao.profissional()}, #{profissionalView.Pesquisa()}">
+
+
+	<nav class="inicio">
+	
+	<div id="imgmenu">
+		<h:graphicImage
+			value="/img/logo final fundo branco pequeno redondo.png">
+		</h:graphicImage>
+
+		<div id="botoes">
+
+
+
+		</div>
+
+	</div>
+
+	</nav>
+	<h:form>  
+    <p:growl id="messages"/>
+ 
+    <p:menubar styleClass="menu"  style="border: none !important">
+    
+    	 <p:submenu label="Profissional" icon="ui-icon-person">
+          
+               <p:menuitem value="Minha Pagina" url="paginaprofissional.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+               <p:separator></p:separator>
+            <p:menuitem value="Avaliacoes Recebidas" url="avaliacoesprofissional.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+            <p:separator></p:separator>
+             <p:menuitem value="Contract Messages" url="profissionalSelecionaChat.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+               
+        </p:submenu>
+      <p:submenu label="Empregador" icon="ui-icon-search">
+      <p:menuitem value="Avaliar Empregador" url="avaliarempregador.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+             <p:separator></p:separator>
+            <p:menuitem value="Todas as Vagas" url="todasofertas.xhtml" icon="ui-icon-arrowreturnthick-1-w" />
+             <p:separator></p:separator>
+            <p:menuitem value="Vagas Inscritas" url="status.xhtml" icon="ui-icon-arrowreturnthick-1-w" />
+        </p:submenu>
+ 
+        <p:submenu label="Meu Perfil" icon="ui-icon-gear">
+         <p:menuitem value="Editar Perfil" url="editarprofissional.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+               <p:separator></p:separator>
+          <p:menuitem value="Alterar Foto" url="paginaprofissionalupload.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+               <p:separator></p:separator>
+         
+            
+        </p:submenu>
+ 
+        <f:facet name="options">
+            
+            <p:commandButton value="Logout" id="ajax" action="index.xhtml" actionListener="#{sessao.encerraSessao()}" />
+        </f:facet>
+    </p:menubar>
+</h:form>
+	<p:layout style="min-width:400px;min-height:700px;">
+	
+			<p:layoutUnit position="west" resizable="false" size="320"
+				minSize="40" maxSize="320">
+	
+				<f:facet name="header">
+					<p:graphicImage value="#{profissionalView.imagem}" width="290"
+						height="290" id="imgprofile" stream="false" ></p:graphicImage>
+				</f:facet>
+
+
+				<h:form id="formlateral">
+
+
+					<p:panelGrid columns="1" style="min-width:310px">
+						
+						<h:outputText value="#{profissionalView.apelido}" style="color: #12bbad;" />
+						<h:outputText value="#{profissionalView.nota}" />
+						<h:outputText value="#{profissionalView.avaliacao}" />
+						<h:outputText value="#{profissionalView.estado}" />
+						<h:outputText value="#{profissionalView.cidade}" />
+						<h:outputText value="Nesta página avalie os Empregadores que o contratou.
+						" style="color:olive;"/>
+						
+	
+					</p:panelGrid>
+				
+					
+				</h:form>	
+			</p:layoutUnit>
+			
+			
+		<h:form>
+			<p:layoutUnit position="center">
+				
+				<p:repeat value="#{avaliacao.lstEmpregador}" var="s">
+						<h:panelGrid columns="1" style="width:100%"
+							columnClasses="logo,detail">
+	
+	
+							<p:outputPanel>
+										
+											
+									<h:panelGrid columns="1" cellpadding="5" >
+											<p:fieldset legend="#{s.apelido}" >
+												<h:panelGrid columns="2" cellpadding="5" >
+													<p:outputLabel value="Estado:" />
+													<h:outputText value="#{s.estado}" style="font-weight: bold" />
+												</h:panelGrid>
+												<h:panelGrid columns="2" cellpadding="5" >
+													<p:outputLabel value="Cidade:" />
+													<h:outputText value="#{s.cidade}" style="font-weight: bold" />
+												</h:panelGrid>
+												<p>Trabalhou no emprego</p>
+									
+									
+										<p:repeat value="#{avaliacao.lstServico2}" var="a">
+											<h:panelGrid columns="1" style="width:100%"
+											columnClasses="logo,detail">
+												<h:panelGrid columns="2" cellpadding="5" >
+													<p:outputLabel value="Nome do Trabalho:" />
+													<h:outputText value="#{a.nomeTrabalho}" style="font-weight: bold" />
+												</h:panelGrid>
+												<h:panelGrid columns="2" cellpadding="5" >
+													<p:outputLabel value="Data:" />
+													<h:outputText value="#{a.dia_inicial}" style="font-weight: bold" />
+												</h:panelGrid>
+											</h:panelGrid>
+										
+										
+												<p:separator style="width 100%"/>
+												<h:form>
+												    <h3>Avalie o Profissional</h3>
+												    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+												       
+												        <p:selectOneRadio id="console" value="#{avaliacao.avaliacaoP}" required="true" requiredMessage="Pontuação é um campo obrigatório!">
+												            <f:selectItem itemLabel="1 " itemValue="1" />
+												            <f:selectItem itemLabel="2 " itemValue="2" />
+												            <f:selectItem itemLabel="3 " itemValue="3" />
+												            <f:selectItem itemLabel="4 " itemValue="4" />
+												            <f:selectItem itemLabel="5 " itemValue="5" />
+												        </p:selectOneRadio>
+												    </h:panelGrid>
+												    
+													<h:panelGrid columns="3" style="margin-bottom:10px">
+															<p:outputLabel value="Escreva sua avaliação sobre o profissional" />
+															<p:inputTextarea rows="5" cols="50" counter="display1" maxlength="254" counterTemplate="{0} caracteres restantes" autoResize="false" required="true" requiredMessage="Avaliação é um campo obrigatório" value="#{avaliacao.descP}" />
+															<h:outputText id="display1" />
+													</h:panelGrid>
+													
+													
+													
+													
+												    <h:panelGrid columns="4" cellpadding="5" >
+													<p:commandButton value="Avaliar Profissional" id="av" actionListener="#{avaliacao.AvaliarProfissional(a.codigo)}"/>
+												</h:panelGrid>
+												    
+												</h:form>
+												</p:repeat>		
+											</p:fieldset>
+										</h:panelGrid>
+										<h:form>							
+								</h:form>		
+					
+							</p:outputPanel>
+						 </h:panelGrid>
+					</p:repeat>	 
+			</p:layoutUnit>
+		</h:form>	
+	</p:layout>
+
+
+
+
+	<pingendo
+		style="cursor:pointer;position: fixed;bottom: 10px;right:10px;padding:4px;background-color: #00b0eb;border-radius: 8px; width:250px;display:flex;flex-direction:row;align-items:center;justify-content:center;font-size:14px;color:white; font-family:Arial">
+	<strong><a class="text-center text-white"
+		href="https://www.facebook.com/john.proencio" target="_blank"
+		style="color: white;">Proencio |</a></strong> <strong><a
+		class="text-center text-white"
+		href="https://www.facebook.com/paulino.lukas" target="_blank"
+		style="color: white;">| Paulino</a></strong> </pingendo>
+
+</h:body>
+</html>

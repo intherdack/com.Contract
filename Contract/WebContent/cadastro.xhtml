@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<link rel="shortcut icon" type="image/x-png" href="#{request.contextPath}/img/fav1.png"/>
+	<link rel="StyleSheet" type="text/css" href="css/css.css"
+		media="screen"></link>
+	<title>Cadastro</title>
+</h:head>
+<h:body>
+
+<nav class="inicioinvertido">
+
+	<div id="imgmenu">
+		<h:graphicImage
+			value="/img/logo final fundo branco pequeno redondo.png">
+		</h:graphicImage>
+		
+		
+		
+		<div id="botoes">
+		
+		<p:button value="Home" outcome="index.xhtml" id="ajax"  styleClass="ui-priority-primary" />
+		<p:button value="Login" outcome="login.xhtml" id="ajax1"  styleClass="ui-priority-primary" />
+		
+		</div>
+		
+
+	</div>
+
+	</nav>
+
+<div id="corpo">
+
+
+<h:form >           
+    <p:growl id="msgs" showDetail="true" />
+ 
+	   
+	    <p:panel id="logar"  style="width: 600px; height: 300px; left: 50%; position: absolute; transform: translateX(-50%); margin-top: 215px; " >
+	        <h:panelGrid columns="2" cellpadding="10">
+	           <h:outputText
+	               value="Cadastre-se" style=" width: 600px; height: 300px; left: 50%; position: absolute; transform: translateX(-50%); margin-top: 10px; font-size:35px;"  />
+	        
+	        	<p:button outcome="cadastroprofissional.xhtml"  value="Profissional" style=" width: 500px; height: 50px; left: 50%; position: absolute; transform: translateX(-50%); margin-top: 100px;"/>
+	        	
+	        	<p:button outcome="cadastroempregador.xhtml"  value="Empregador" style=" width: 500px; height: 50px; left: 50%; position: absolute; transform: translateX(-50%); margin-top: 150px;"/>
+	        
+	        </h:panelGrid>
+	    
+	    </p:panel>
+	    
+
+	   
+    
+   </h:form>
+   <pingendo  style="cursor:pointer;position: fixed;bottom: 10px;right:10px;padding:4px;background-color: #00b0eb;border-radius: 8px; width:250px;display:flex;flex-direction:row;align-items:center;justify-content:center;font-size:14px;color:white; font-family:Arial">
+       <strong><a class="text-center text-white" href="https://www.facebook.com/john.proencio" target="_blank" style="color:white;">Proencio |</a></strong> 
+       <strong><a class="text-center text-white" href="https://www.facebook.com/paulino.lukas" target="_blank" style="color:white;">| Paulino</a></strong> 
+      </pingendo>
+</div>
+</h:body>
+</html>

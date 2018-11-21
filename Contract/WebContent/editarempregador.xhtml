@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<link rel="shortcut icon" type="image/x-png" href="#{request.contextPath}/img/fav1.png"/>
+	<link rel="StyleSheet" type="text/css" href="css/css.css"
+		media="screen"></link>
+	<title>Editar Empregador</title>
+</h:head>
+<h:body onload="#{editaEmpregador.BuscarDados()}, #{empregadorView.Pesquisa()}">
+
+
+
+	<nav class="inicio">
+
+	<div id="imgmenu">
+		<h:graphicImage
+			value="/img/logo final fundo branco pequeno redondo.png">
+		</h:graphicImage>
+		<div id="botoes">
+			
+		</div>
+
+	</div>
+
+	</nav>
+	<h:form>  
+    <p:growl id="messages"/>
+ 
+    <p:menubar styleClass="menu"  style="border: none !important">
+      <p:submenu label="Empregador" icon="ui-icon-person">
+      <p:menuitem value="Minha Pagina" url="paginaempregador.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+             <p:separator></p:separator>
+            <p:menuitem value="Publicar uma Vaga" url="cadastrodeservicos.xhtml" icon="ui-icon-arrowreturnthick-1-w" />
+            
+             <p:separator></p:separator>
+            <p:menuitem value="Suas Publicacoes" url="suaspublicacoes.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+            
+            
+         
+            
+            
+        </p:submenu>
+ 
+        <p:submenu label="Profissional" icon="ui-icon-search">
+          
+               <p:menuitem value="Todos os Profissionais" url="todosprofissionais.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+               <p:separator></p:separator>
+            <p:menuitem value="Avaliar Profissionais" url="avaliarprofissionais" icon="ui-icon-arrowreturnthick-1-e" />
+            <p:separator></p:separator>
+             <p:menuitem value="Contract Messages" url="empregadorSelecionaChat.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+               <p:separator></p:separator>
+            <p:menuitem value="Candidatos a Vagas" url="empregadorcandidatos.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+            <p:separator></p:separator>
+            <p:menuitem value="Avaliacoes Recebidas" url="empregadoravaliacoes.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+           
+        </p:submenu>
+ 
+        <p:submenu label="Meu Perfil" icon="ui-icon-gear">
+         <p:menuitem value="Editar Perfil" url="editarempregador.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+               <p:separator></p:separator>
+          <p:menuitem value="Alterar Foto" url="paginaempregadorupload.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+               <p:separator></p:separator>
+              
+              
+            
+            
+        </p:submenu>
+ 
+     
+ 
+        <f:facet name="options">
+            
+<p:commandButton value="Logout" id="ajax" action="index.xhtml" actionListener="#{sessao.encerraSessao()}" />        </f:facet>
+    </p:menubar>
+</h:form>
+<p:layout style="min-width:400px;min-height:700px;">
+	
+		<p:layoutUnit position="west" resizable="false" size="320"
+			minSize="40" maxSize="320">
+			
+			<f:facet name="header">
+<p:graphicImage value="#{empregadorView.imagem}" width="290"
+						height="290" id="imgprofile" stream="false" ></p:graphicImage>			</f:facet>
+			
+	
+			<h:form>
+		
+				<p:panelGrid columns="1" style="min-width:310px">
+						<h:outputText value="#{empregadorView.apelido}" style="color: #12bbad;"/>
+						<h:outputText value="#{empregadorView.nota}" />
+						<h:outputText value="#{empregadorView.avaliacao}"/>
+						<h:outputText value="#{empregadorView.estado}" />
+						<h:outputText value="#{empregadorView.cidade}" />
+						<h:outputText value="Bem vindo a página de alteração de dados cadastrais, realize as alterações necessárias e 
+						clique em salvar.
+						" style="color:olive;"/>
+						
+				</p:panelGrid>
+			<br/>
+			</h:form>
+					 		
+		</p:layoutUnit>
+
+		
+    
+    
+			<p:layoutUnit position="center">
+
+
+	<h:form id="frmprof">
+		<p:growl id="cadastroprof" showDetail="true" />
+
+		<p:fieldset legend="Editar Empregador" style="margin-bottom:20px">
+		
+		 		
+			<h:panelGrid columns="2" cellpadding="5">
+				
+			
+				<p:outputLabel value="Nome/Razão Social:" />
+				<p:inputText id="nome" value="#{editaEmpregador.listaPro.get(0).nome}" required="true" requiredMessage="Digite um Nome/Razão Social" size="70"/>
+				<p:outputLabel value="Apelido para Conta:" />
+				<p:inputText id="apelido" value="#{editaEmpregador.listaPro.get(0).apelido}" required="true" requiredMessage="Digite um Apelido"/>
+				<p:outputLabel value="CPF/CNPJ:" />
+				<p:inputText id="cpf" value="#{editaEmpregador.cpf}" required="true" requiredMessage="Digite um CPF/CNPJ" maxlength="14" />
+				<p:outputLabel value="Telefone Fixo:" />
+				<p:inputMask id="telFixo" value="#{editaEmpregador.listaPro.get(0).telFixo}" maxlength="10" mask="(99) 9999-9999" required="false" requiredMessage="Digite um Telefone Fixo"/>
+				<p:outputLabel value="Telefone Movel:" />
+				<p:inputMask id="telMovel" value="#{editaEmpregador.listaPro.get(0).telMovel}" maxlength="10" mask="(99) 99999-9999" required="false" requiredMessage="Digite um Telefone Movel"/>
+				
+				  
+        		<p:outputLabel value="CEP: " />    
+        <p:inputMask id="cep" value="#{editaEmpregador.cep}" maxlength="8" mask="99999-999">
+        <p:ajax event="blur" listener="#{editaEmpregador.bntCep()}" update="cepatualiza"  />
+        </p:inputMask>
+					<p:fieldset id="cepatualiza">
+				
+        <p:outputLabel value="Cidade: " /> 
+        <br></br>
+        
+        <p:inputText id="cidade" value="#{editaEmpregador.listaPro.get(0).cidade}" disabled="true" required="true" requiredMessage="Digite um CEP Válido"/> 
+         <br></br>
+        <p:outputLabel value="UF: " />
+         <br></br>
+        <p:inputText id="uf" value="#{editaEmpregador.listaPro.get(0).estado}" disabled="true" />
+         <br></br>
+       </p:fieldset>
+				
+				
+				
+				
+				<br></br>
+				
+				<p:outputLabel value="E-mail:" />
+				<p:inputText id="email" disabled="true" value="#{editaEmpregador.listaPro.get(0).email}" required="true" requiredMessage="Digite um E-mail"/>
+				
+				
+				 
+				<p:outputLabel value="Escreva suas referências:" />
+				<p:inputTextarea rows="5" cols="40" counter="display555" maxlength="254" counterTemplate="{0} caracteres restantes" autoResize="false" required="true" requiredMessage="Referência é um campo obrigatório" value="#{editaEmpregador.listaPro.get(o).descricao}"/>
+   				<br></br>
+   				 <h:outputText id="display555" />
+				
+				<p:spacer/>
+
+			</h:panelGrid>
+	<p:separator style="width 100%"/>
+
+			<p:commandButton value="Salvar Alterações" id="nonAjax"
+			actionListener="#{editaEmpregador.bntAlterarEmp()}" ajax="false" styleClass="botaoeditar"/>
+
+
+		</p:fieldset>
+	</h:form>
+	
+	</p:layoutUnit>
+	</p:layout>
+	
+	
+	
+	<pingendo  style="cursor:pointer;position: fixed;bottom: 10px;right:10px;padding:4px;background-color: #00b0eb;border-radius: 8px; width:250px;display:flex;flex-direction:row;align-items:center;justify-content:center;font-size:14px;color:white; font-family:Arial">
+       <strong><a class="text-center text-white" href="https://www.facebook.com/john.proencio" target="_blank" style="color:white;">Proencio |</a></strong> 
+       <strong><a class="text-center text-white" href="https://www.facebook.com/paulino.lukas" target="_blank" style="color:white;">| Paulino</a></strong> 
+      </pingendo>
+
+</h:body>
+
+</html>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<link rel="shortcut icon" type="image/x-png" href="#{request.contextPath}/img/fav1.png"/>
+	<link rel="StyleSheet" type="text/css" href="css/css.css"
+		media="screen"></link>
+	<title>Cadastro Empregador</title>
+</h:head>
+<h:body>
+
+
+	<nav class="inicio">
+
+	<div id="imgmenu">
+		<h:graphicImage
+			value="/img/logo final fundo branco pequeno redondo.png">
+		</h:graphicImage>
+		
+		
+		
+		<div id="botoes">
+		
+		<p:button value="Home" outcome="index.xhtml" id="ajax"  styleClass="ui-priority-primary" />
+		<p:button value="Login" outcome="login.xhtml" id="ajax1"  styleClass="ui-priority-primary" />
+		
+		</div>
+		
+
+	</div>
+
+	</nav>
+
+	<h:form id="frmprof">
+		<p:growl id="cadastroprof" showDetail="true" />
+
+		<p:fieldset legend="Cadastro Empregador" style="margin-bottom:20px; margin-top:178px;">
+		
+		 		
+			<h:panelGrid columns="2" cellpadding="5">
+				<p:outputLabel value="Nome/Razão Social:" />
+				<p:inputText id="nome" value="#{empregador.nome}" required="true" requiredMessage="Digite um Nome/Razão Social" size="70"/>
+				<p:outputLabel value="Apelido para Conta:" />
+				<p:inputText id="apelido" value="#{empregador.apelido}" required="true" requiredMessage="Digite um Apelido"/>
+				<p:outputLabel value="CPF/CNPJ:" />
+				<p:inputMask id="cpf" value="#{empregador.cpf}" required="true" requiredMessage="Digite um CPF/CNPJ" type="Number" maxlength="14"/>
+				<p:outputLabel value="Telefone Fixo:" />
+				<p:inputMask id="telFixo" value="#{empregador.telFixo}" maxlength="10" mask="(99) 9999-9999" required="false" requiredMessage="Digite um Telefone Fixo"/>
+				<p:outputLabel value="Telefone Movel:" />
+				<p:inputMask id="telMovel" value="#{empregador.telMovel}" maxlength="10" mask="(99) 99999-9999" required="false" requiredMessage="Digite um Telefone Movel"/>
+				  
+        		<p:outputLabel value="CEP: " />    
+        <p:inputMask id="cep" value="#{empregador.cep}" maxlength="8" mask="99999-999" required="true" requiredMessage="CEP é obrigatório">
+        <p:ajax event="blur" listener="#{empregador.bntCep()}" update="cepatualiza"  />
+        </p:inputMask>
+					<p:fieldset id="cepatualiza">
+				
+        <p:outputLabel value="Cidade: " /> 
+        <br></br>
+        
+        <p:inputText id="cidade" value="#{empregador.cidade}" disabled="true" required="true" requiredMessage="Digite um CEP Válido"/> 
+         <br></br>
+        <p:outputLabel value="UF: " />
+         <br></br>
+        <p:inputText id="uf" value="#{empregador.estado}" disabled="true" />
+         <br></br>
+       </p:fieldset>
+				
+				
+				
+				
+				<br></br>
+				
+				<p:outputLabel value="E-mail:" />
+				<p:inputText id="email" value="#{empregador.email}" required="true" requiredMessage="Digite um E-mail"/>
+				<p:outputLabel value="Senha:" />
+				<p:password id="pwd1" value="#{empregador.senha}" match="pwd2" label="Senha" required="true" requiredMessage="Campo senha é necessário" validatorMessage="Senhas não são IGUAIS" />
+				<p:outputLabel value="Redigite sua senha:" />
+				<p:password id="pwd2" value="#{empregador.resenha}" label="Password 2" required="true" requiredMessage="Confirme sua senha"/>
+				 
+				<p:outputLabel value="Escreva suas referências:" />
+				<p:inputTextarea rows="5" cols="40" counter="display555" maxlength="254" counterTemplate="{0} caracteres restantes" autoResize="false" required="true" requiredMessage="Referência é um campo obrigatório" value="#{empregador.descricao}"/>
+   				<br></br>
+   				 <h:outputText id="display555" />
+				
+				<p:spacer/>
+
+			</h:panelGrid>
+	<p:separator style="width 100%"/>
+
+			<p:commandButton value="Cadastrar" id="nonAjax"
+			actionListener="#{empregador.btcadastrar()}" ajax="false" styleClass="botao"/>
+
+
+		</p:fieldset>
+
+
+	</h:form>
+	<pingendo  style="cursor:pointer;position: fixed;bottom: 10px;right:10px;padding:4px;background-color: #00b0eb;border-radius: 8px; width:250px;display:flex;flex-direction:row;align-items:center;justify-content:center;font-size:14px;color:white; font-family:Arial">
+       <strong><a class="text-center text-white" href="https://www.facebook.com/john.proencio" target="_blank" style="color:white;">Proencio |</a></strong> 
+       <strong><a class="text-center text-white" href="https://www.facebook.com/paulino.lukas" target="_blank" style="color:white;">| Paulino</a></strong> 
+      </pingendo>
+
+</h:body>
+
+</html>

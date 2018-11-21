@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<link rel="StyleSheet" type="text/css" href="css/css.css" media="screen"></link>
+	<link rel="shortcut icon" type="image/x-png" href="#{request.contextPath}/img/fav1.png"/>
+	
+	<title>Cadastro de Serviço</title>
+</h:head>
+<h:body onload="#{servico.buscanome()}">
+
+
+
+	<nav class="inicio">
+
+	<div id="imgmenu">
+		<h:graphicImage
+			value="/img/logo final fundo branco pequeno redondo.png">
+		</h:graphicImage>
+		<div id="botoes">
+			
+		</div>
+
+	</div>
+
+	</nav>
+	<h:form>  
+    <p:growl id="messages" />
+ 
+    <p:menubar styleClass="menu"  style="border: none !important">
+      <p:submenu label="Empregador" icon="ui-icon-person">
+      <p:menuitem value="Minha Pagina" url="paginaempregador.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+             <p:separator></p:separator>
+            <p:menuitem value="Publicar uma Vaga" url="cadastrodeservicos.xhtml" icon="ui-icon-arrowreturnthick-1-w" />
+            
+             <p:separator></p:separator>
+            <p:menuitem value="Suas Publicacoes" url="suaspublicacoes.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+  
+            
+        </p:submenu>
+ 
+        <p:submenu label="Profissional" icon="ui-icon-search">
+          
+               <p:menuitem value="Todos os Profissionais" url="todosprofissionais.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+               <p:separator></p:separator>
+            <p:menuitem value="Avaliar Profissionais" url="avaliarprofissional.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+            <p:separator></p:separator>
+             <p:menuitem value="Contract Messages" url="empregadorSelecionaChat.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+               <p:separator></p:separator>
+            <p:menuitem value="Candidatos a Vagas" url="empregadorcandidatos.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+            <p:separator></p:separator>
+            <p:menuitem value="Avaliacoes Recebidas" url="empregadoravaliacoes.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+           
+        </p:submenu>
+ 
+        <p:submenu label="Meu Perfil" icon="ui-icon-gear">
+         <p:menuitem value="Editar Perfil" url="editarempregador.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+               <p:separator></p:separator>
+          <p:menuitem value="Alterar Foto" url="paginaempregadorupload.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+               <p:separator></p:separator>
+              
+              
+            
+            
+        </p:submenu>
+ 
+     
+ 
+        <f:facet name="options">
+            
+<p:commandButton value="Logout" id="ajax" action="index.xhtml" actionListener="#{sessao.encerraSessao()}" />        </f:facet>
+    </p:menubar>
+</h:form>
+	<h:form id="frmprof">
+		
+		
+		
+			
+			
+
+		<p:fieldset legend="Cadastro de Servicos" style="margin-bottom:20px">
+		
+			<p:outputLabel value="Bem Vindo " style="margin-left:5px"/>
+			<p:outputLabel value=" " />
+			<p:outputLabel value="#{servico.apemp}"/>
+			<p:outputLabel value="," />	
+		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+
+			<p:outputLabel value="Escolha o tipo de trabalho: " />
+
+					<p:selectOneButton value="#{servico.tipo}" required="true"
+						requiredMessage="Selecione o Tipo de Trabalho">
+						<f:selectItem itemLabel="Fixo" itemValue="Fixo" />
+						<f:selectItem itemLabel="Freelance" itemValue="Freelance" />
+					</p:selectOneButton>
+					<h:outputText id="display" value="#{selectOneView.option}"
+						style="font-weight: bold" />
+
+			</h:panelGrid>
+			
+			<p:separator style="width 100%"/>
+			
+				
+			<h:panelGrid columns="2" cellpadding="5">
+			
+		 <p:outputLabel value="Nome do Serviço " />
+        <p:inputText id="nome" value="#{servico.nomeTrabalho}" size="40" required="true"	requiredMessage="Digite um Nome" />
+
+		<p:outputLabel value="CEP: " />    
+        <p:inputMask id="cep" value="#{servico.cep}" maxlength="8" mask="99999-999" required="true" requiredMessage="CEP é obrigatório">
+        <p:ajax event="blur" listener="#{servico.bntCep()}" update="cepatualiza"  />
+        </p:inputMask>
+
+				<p:outputLabel value="Valor:" />
+				<p:inputNumber id="valor" value="#{servico.valor}" required="true" requiredMessage="Digite um Valor" symbol="R$ " decimalSeparator=","/>
+			
+				
+				
+				
+				<p:outputLabel value=" " />
+				
+				<p:fieldset id="cepatualiza">
+				
+        <p:outputLabel value="Cidade: " /> 
+        <br></br>      
+        <p:inputText id="cidade" value="#{servico.cidade}" disabled="true" >
+         
+        </p:inputText>
+        
+        <br></br>
+        
+        
+        <p:outputLabel value="UF: " />
+        <br></br>
+        <p:inputText id="uf" value="#{servico.UF}" disabled="true" />
+        
+       </p:fieldset>
+			</h:panelGrid>
+			<p:separator style="width 100%" />
+			
+			<!-- =========================================== DATAS E HORAS ============================================= -->
+			
+			<p:separator style="width 100%" />
+			<h:panelGrid columns="4" cellpadding="5">
+				
+				<p:outputLabel value="Data e hora inicial:" />
+				<p:calendar value="#{servico.dia_inicial}" timeOnly="false" showButtonPanel="true" navigator="true" locale="pt_BR" required="true" requiredMessage="Dia inicial é obrigatório"/>
+			
+				
+				<p:calendar value="#{servico.hora_inicial}"	pattern="HH:mm" timeOnly="true" showButtonPanel="true" navigator="true" locale="pt_BR" required="true" requiredMessage="Hora inicial é obrigatório"/>
+						
+				<br/>
+				
+				<p:outputLabel value="Data e hora final:" />
+				<p:calendar value="#{servico.dia_final}" timeOnly="false" showButtonPanel="true" navigator="true" locale="pt_BR" required="true" requiredMessage="Dia final é obrigatório"/>
+				<p:calendar value="#{servico.hora_final}" pattern="HH:mm" timeOnly="true" showButtonPanel="true" navigator="true" locale="pt_BR" required="true" requiredMessage="Hora final é obrigatório"/>					
+			 
+			 
+			 
+
+			</h:panelGrid>
+			
+			<p:separator style="width 100%" />
+		
+		
+		<p:fieldset legend="Selecione a área do trabalho: ">
+		
+	    
+	        <p:outputLabel for="Trabalhos" value="Trabalhos" />
+	        <p:selectOneRadio id="Trabalhos" value="#{servico.funcao}" layout="pageDirection" required="true" requiredMessage="Selecione um trabalho">
+	        <br></br>
+	       
+	            <f:selectItem itemLabel="Marido de Aluguel" itemValue="marido" />
+	            <f:selectItem itemLabel="Faxineiro" itemValue="faxinLimeiro" />	           
+	            <f:selectItem itemLabel="Limpeza" itemValue="limpeza" />	            
+	            <f:selectItem itemLabel="Garçom" itemValue="garcom" />	            
+	            <f:selectItem itemLabel="Bartender" itemValue="bartender" />
+	            <f:selectItem itemLabel="Cozinheiro(a)" itemValue="cozinheiro" />
+	            <f:selectItem itemLabel="Churrasqueiro" itemValue="churrasqueiro" />
+	            <f:selectItem itemLabel="Confeiteiro" itemValue="confeteiro" />
+	            <f:selectItem itemLabel="Babá" itemValue="baba" />
+	            <f:selectItem itemLabel="Marketing de Mídias Sociais" itemValue="marketing" />
+	            <f:selectItem itemLabel="Manicure" itemValue="maquiagem" />
+	            <f:selectItem itemLabel="Serviços Contábeis" itemValue="contabeis" />
+	            <f:selectItem itemLabel="Motorista de Carro" itemValue="motorista" />
+	            
+	            
+	        </p:selectOneRadio>
+	   
+	 </p:fieldset>
+        
+		
+
+	
+					
+		<p:separator style="width 100%"/>
+		
+		<h:panelGrid columns="3" style="margin-bottom:10px">
+				<p:outputLabel value="Informações adicionais do trabalho:" />
+				<p:inputTextarea rows="5" cols="50" counter="display1" maxlength="254" counterTemplate="{0} caracteres restantes" autoResize="false" required="true" requiredMessage="Referência é um campo obrigatório" value="#{servico.descricao}" />
+				<h:outputText id="display1" />
+		</h:panelGrid>
+		
+			<p:commandButton value="Cadastrar" id="nonAjax" 
+				actionListener="#{servico.btnSalvar()}" ajax="false" styleClass="botao" />
+
+
+		</p:fieldset>
+
+
+	</h:form>
+	
+	
+	
+	
+	
+	
+<pingendo  style="cursor:pointer;position: fixed;bottom: 10px;right:10px;padding:4px;background-color: #00b0eb;border-radius: 8px; width:250px;display:flex;flex-direction:row;align-items:center;justify-content:center;font-size:14px;color:white">
+        <a class="text-center text-white" href="https://www.facebook.com/john.proencio" target="_blank">Proencio |</a>
+        <a class="text-center text-white" href="https://www.facebook.com/paulino.lukas" target="_blank">| Paulino</a>
+      </pingendo>
+    <script type="text/javascript">
+           PrimeFaces.locales['pt_BR'] = {
+                closeText: 'Fechar',
+                prevText: 'Anterior',
+                nextText: 'Próximo',
+                currentText: 'Atual',
+                monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+                dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
+                weekHeader: 'Semana',
+                firstDay: 0,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Só Horas',
+                timeText: 'Tempo',
+                hourText: 'Hora',
+                minuteText: 'Minuto',
+                secondText: 'Segundo',
+                ampm: false,
+                month: 'Mês',
+                week: 'Semana',
+                day: 'Dia',
+                allDayText: 'Todo o Dia'
+            };
+     </script>  
+
+</h:body>
+
+</html>

@@ -1,0 +1,58 @@
+@charset "ISO-8859-1";
+
+
+
+.inicio{
+	background-color: #12bbad;
+	width:100%; 
+	height: 65px;
+	margin: 0;
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+    
+}
+
+#imgmenu{
+	margin-left: 70px;
+	margin-top: 20px;
+}
+
+#botoes{
+	margin-top: 0px;
+	float: right;
+	margin-right: 50px;
+	display: block;
+	position: relative;
+	
+	
+}
+
+
+#corpo{
+
+   margin-top: 62px;
+  align-items: center;
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: center;
+   
+}
+
+#rodape{
+	
+	background-color: #12bbad;
+	width:100%; 
+	height: 250px;
+	margin: 0;
+    position: absolute;
+    margin-top: 96px;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    
+	
+}

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<link rel="shortcut icon" type="image/x-png" href="#{request.contextPath}/img/fav1.png"/>
+
+
+	<link rel="StyleSheet" type="text/css" href="css/css.css"
+		media="screen"></link>
+	<title>Contract Messages</title>
+
+</h:head>
+<!--  #{loga.codigo} esse é o que passa o valor do metodo para a pagina porem nao consigo atribuir a baixo-->
+
+
+
+<h:body onload="#{empregadorView.Pesquisa()}, #{chatempregador.conversaEmpregador()}">
+
+
+	<nav class="inicio">
+
+		<div id="imgmenu">
+			<h:graphicImage value="/img/logo final fundo branco pequeno redondo.png">
+	
+			</h:graphicImage>
+
+			
+
+		</div>
+
+	</nav>
+		<h:form>  
+    <p:growl id="messages"/>
+ 
+    <p:menubar styleClass="menu"  style="border: none !important">
+      <p:submenu label="Empregador" icon="ui-icon-person">
+      <p:menuitem value="Minha Pagina" url="paginaempregador.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+             <p:separator></p:separator>
+            <p:menuitem value="Publicar uma Vaga" url="cadastrodeservicos.xhtml" icon="ui-icon-arrowreturnthick-1-w" />
+            
+             <p:separator></p:separator>
+            <p:menuitem value="Suas Publicacoes" url="suaspublicacoes.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+            
+            
+         
+            
+            
+        </p:submenu>
+ 
+        <p:submenu label="Profissional" icon="ui-icon-search">
+          
+               <p:menuitem value="Todos os Profissionais" url="todosprofissionais.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+               <p:separator></p:separator>
+            <p:menuitem value="Avaliar Profissionais" url="avaliarprofissional.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+            <p:separator></p:separator>
+             <p:menuitem value="Contract Messages" url="empregadorSelecionaChat.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+               <p:separator></p:separator>
+            <p:menuitem value="Candidatos a Vagas" url="empregadorcandidatos.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+            <p:separator></p:separator>
+            <p:menuitem value="Avaliacoes Recebidas" url="empregadoravaliacoes.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+           
+        </p:submenu>
+ 
+        <p:submenu label="Meu Perfil" icon="ui-icon-gear">
+         <p:menuitem value="Editar Perfil" url="editarempregador.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+               <p:separator></p:separator>
+          <p:menuitem value="Alterar Foto" url="paginaempregadorupload.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+               <p:separator></p:separator>
+              
+              
+            
+            
+        </p:submenu>
+ 
+     
+ 
+        <f:facet name="options">
+            
+<p:commandButton value="Logout" id="ajax" action="index.xhtml" actionListener="#{sessao.encerraSessao()}" />        </f:facet>
+    </p:menubar>
+</h:form>
+	
+		<p:layout style="min-width:400px;min-height:700px;">
+	
+			<p:layoutUnit position="west" resizable="false" size="320"
+				minSize="40" maxSize="320">
+	
+				<f:facet name="header">
+					<p:graphicImage value="#{empregadorView.imagem}" width="290"
+						height="290" id="imgprofile" stream="false" ></p:graphicImage>
+				</f:facet>
+
+
+				<h:form id="formlateral">
+
+
+					<p:panelGrid columns="1" style="min-width:310px">
+						
+						<h:outputText value="#{empregadorView.apelido}" style="color: #12bbad;" />
+						<h:outputText value="#{empregadorView.nota}" />
+						<h:outputText value="#{empregadorView.avaliacao}" />
+						<h:outputText value="#{empregadorView.estado}" />
+						<h:outputText value="#{empregadorView.cidade}" />
+						<h:outputText value="Aqui você visuazualizará suas conversações com os Profissionais.
+						" style="color:olive;"/>
+						
+	
+					</p:panelGrid>
+				
+					
+				</h:form>	
+			</p:layoutUnit>
+			
+			
+		<h:form>
+			<p:layoutUnit position="center">
+		
+			
+				<p:repeat value="#{chatempregador.listcaras}" var="s">
+					
+					<h:panelGrid columns="2" style="width:100%"
+						columnClasses="logo,detail">
+
+
+						<p:outputPanel>
+							<h:panelGrid columns="3" cellpadding="5">
+								
+								
+								<h:outputText value="Conversas entre: " style="font-weight: bold;right:10px;padding:4px;border-radius: 8px;background-color: rgba(18, 187, 173,0.5);font-size:20px;color:white;"/>
+								<br/>
+								<h:outputText value="#{s.obs}" style="font-weight: bold" />
+								<p:commandButton value="Chat" id="cand" actionListener="#{chatempregador.buscachatEmpregador(s.idOriginadorProfissional)}"/>
+								<br></br>
+								
+						
+							</h:panelGrid>
+						</p:outputPanel>
+					</h:panelGrid>
+					<hr />
+				</p:repeat>
+			</p:layoutUnit>
+		</h:form>	
+	</p:layout>
+
+			
+
+	
+
+		
+
+	<pingendo
+		style="cursor:pointer;position: fixed;bottom: 10px;right:10px;padding:4px;background-color: #00b0eb;border-radius: 8px; width:250px;display:flex;flex-direction:row;align-items:center;justify-content:center;font-size:14px;color:white; font-family:Arial">
+	<strong><a class="text-center text-white"
+		href="https://www.facebook.com/john.proencio" target="_blank"
+		style="color: white;">Proencio |</a></strong> <strong><a
+		class="text-center text-white"
+		href="https://www.facebook.com/paulino.lukas" target="_blank"
+		style="color: white;">| Paulino</a></strong> </pingendo>
+
+</h:body>
+</html>
